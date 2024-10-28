@@ -1,6 +1,7 @@
 package selenium1;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,8 +15,9 @@ import java.util.*;
 import java.io.*;
 
 public class RunSelenium {
+	
 	public static void main(String[] args) {
-
+		
 		WebDriver driver = new ChromeDriver();
 
 		driver.get("https://twitter.com/login");
@@ -24,8 +26,7 @@ public class RunSelenium {
 				"[autocapitalize='sentences'][autocomplete='username'][autocorrect='on'][name='text'][spellcheck='true']")));
 		usernameField.sendKeys("huythetime1@gmail.com");
 
-		WebElement nextButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(
-				"[role='button'][type='button'][class=\"css-175oi2r r-sdzlij r-1phboty r-rs99b7 r-lrvibr r-ywje51 r-184id4b r-13qz1uu r-2yi16 r-1qi8awa r-3pj75a r-1loqt21 r-o7ynqc r-6416eg r-1ny4l3l\"]")));
+		WebElement nextButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Next']")));
 		nextButton.click();
 
 		WebElement nameField = wait
@@ -48,21 +49,31 @@ public class RunSelenium {
 
 		WebElement searchEngine = wait
 				.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[placeholder=Search]")));
-		searchEngine.sendKeys("Blockchain");
+		searchEngine.sendKeys("#SmartContracts");
 		searchEngine.submit();
 		WebElement people = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("People")));
 		people.click();
 		WebElement test = wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By.cssSelector("[data-testid='UserCell'][role='button']")));
 		List<WebElement> userList = driver.findElements(By.cssSelector("[data-testid='UserCell'][role='button']"));
-		Set<String> str = new HashSet<String>();
+		Properties properties = new Properties();
+		Set<String> str = new HashSet<>();
+	        try (FileInputStream fis = new FileInputStream("KOLLink.properties")) {
+	            properties.load(fis);
+	            for (String key : properties.stringPropertyNames()) {
+	                str.add(properties.getProperty(key));
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        
+	    
 
-		
 
 		
 		
 			
-		while(str.size()<500){
+		while(str.size()<3200){
 	
 				try {
 					Thread.sleep(2000);
@@ -88,19 +99,20 @@ public class RunSelenium {
 						test.sendKeys(Keys.ARROW_DOWN);	
 						
 					}
+				
 			}
-			 Properties properties = new Properties();
+		Properties prop = new Properties();
 		        int i = 0;
 		        for (String item : str) {
-		            properties.put("item" + i, item);
+		            prop.put("item" + i, item);
 		            i++;
 		        }
 		        try (FileOutputStream fos = new FileOutputStream("KOLLink.properties")) {
-		            properties.store(fos, "Set of Strings");
+		            prop.store(fos, "Set of Strings");
 		        } catch (IOException e) {
 		            e.printStackTrace();
 		        }
-
-	
+        
+	driver.quit();
 }
 }
