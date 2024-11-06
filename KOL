@@ -1,0 +1,38 @@
+import java.util.List;
+
+public class KOL {
+
+    private String username;
+    private int followersCount;
+    private List<Tweet> tweets;
+
+    public KOL(String username, int followersCount) {
+        this.username = username;
+        this.followersCount = followersCount;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public int getFollowersCount() {
+        return followersCount;
+    }
+
+    public List<Tweet> getTweets() {
+        return tweets;
+    }
+
+    public void setTweets(List<Tweet> tweets) {
+        this.tweets = tweets;
+    }
+
+    @Override
+    public String toString() {
+        return "KOL{" +
+                "username='" + username + '\'' +
+                ", followersCount=" + followersCount +
+                ", tweets=" + tweets +
+                '}';
+    }
+}
